@@ -1,0 +1,82 @@
+{
+  "admins": [
+    {
+      "id": "97cd4990-15f7-4fda-b449-74dc474404f0",
+      "email": "admin@campusvoice.edu",
+      "passwordHash": "$2b$10$.isSI0mX/LPtZ0IYkN4sYeeVBmgQUgMA78IR9XbmEVbrDSKv7J/Sy",
+      "name": "Campus Admin"
+    }
+  ],
+  "feedback": [
+    {
+      "id": "b24dd605-264c-4fbc-8ec5-3fd88f1a7434",
+      "studentName": null,
+      "isAnonymous": true,
+      "courseCode": "CS201",
+      "courseName": "Data Structures",
+      "instructor": "Dr. Mehta",
+      "category": "teaching",
+      "rating": 5,
+      "comment": "Clear explanations and helpful office hours. The weekly problem sets really cemented the concepts.",
+      "status": "new",
+      "createdAt": "2026-08-12T05:26:32.450Z",
+      "updatedAt": "2026-08-12T05:26:32.450Z"
+    },
+    {
+      "id": "ba0514e3-c89d-470e-a549-3baa6ea17820",
+      "studentName": "Priya Sharma",
+      "isAnonymous": false,
+      "courseCode": "ENG110",
+      "courseName": "Academic Writing",
+      "instructor": "Prof. Alvarez",
+      "category": "workload",
+      "rating": 3,
+      "comment": "Interesting readings, but three essays in one month made it hard to keep quality high across all of them.",
+      "status": "reviewed",
+      "createdAt": "2026-08-10T05:26:32.453Z",
+      "updatedAt": "2026-08-12T05:26:32.450Z"
+    },
+    {
+      "id": "69656792-e0aa-43b0-b788-2bc0244a9a7f",
+      "studentName": null,
+      "isAnonymous": true,
+      "courseCode": "MATH240",
+      "courseName": "Linear Algebra",
+      "instructor": "Dr. Chen",
+      "category": "materials",
+      "rating": 4,
+      "comment": "Lecture notes are excellent. Would love recorded sessions for review before exams.",
+      "status": "resolved",
+      "createdAt": "2026-08-07T05:26:32.453Z",
+      "updatedAt": "2026-08-12T05:26:32.450Z"
+    },
+    {
+      "id": "bb3b666c-6612-4152-a9fd-c13927c808f5",
+      "studentName": "Jordan Lee",
+      "isAnonymous": false,
+      "courseCode": "PHY150",
+      "courseName": "Introductory Physics",
+      "instructor": "Dr. Okonkwo",
+      "category": "assessment",
+      "rating": 4,
+      "comment": "Labs are engaging. Midterm felt fair, though the practice set could use more worked examples.",
+      "status": "new",
+      "createdAt": "2026-08-11T05:26:32.453Z",
+      "updatedAt": "2026-08-12T05:26:32.450Z"
+    },
+    {
+      "id": "d3a66218-c09c-448b-8d52-7eabbf1e521b",
+      "studentName": null,
+      "isAnonymous": true,
+      "courseCode": "HIST210",
+      "courseName": "Modern World History",
+      "instructor": "Prof. Singh",
+      "category": "other",
+      "rating": 2,
+      "comment": "Classroom AV often fails during lectures. Hard to follow video clips when the projector cuts out.",
+      "status": "new",
+      "createdAt": "2026-08-11T23:26:32.453Z",
+      "updatedAt": "2026-08-12T05:26:32.450Z"
+    }
+  ]
+}
