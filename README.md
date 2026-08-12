@@ -21,6 +21,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - Landing page and course feedback form (rating, category, comments)
 - Anonymous or named submissions
+- VoiceBot help chat (submit tips, anonymity, categories, ratings)
 - Admin login (JWT cookie session)
 - Dashboard with filters, status updates, and delete
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree, Fraunces } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
+import { FeedbackBot } from "@/components/FeedbackBot";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -35,6 +36,7 @@ export default function RootLayout({
         <footer className="site-footer">
           CampusVoice — student voices shaping better courses
         </footer>
+        <FeedbackBot />
       </body>
     </html>
   );
