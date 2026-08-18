@@ -618,6 +618,7 @@ h2,
   border-radius: 999px;
   box-shadow: 0 14px 32px rgba(14, 77, 84, 0.35);
   transition: transform 160ms ease, box-shadow 160ms ease;
+  animation: launcher-pulse 2.8s ease-in-out infinite;
 }
 
 .voicebot__launcher:hover {
@@ -657,9 +658,44 @@ h2,
   color: var(--sea-deep);
 }
 
+.voicebot__identity {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.voicebot__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--sea-deep), var(--sea));
+  color: white;
+  font-weight: 700;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
 .voicebot__header h2 {
+  margin: 0.05rem 0 0;
+  font-size: 1.2rem;
+}
+
+.voicebot__status {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   margin: 0.15rem 0 0;
-  font-size: 1.35rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.voicebot__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #1f9d55;
 }
 
 .voicebot__close {
@@ -689,7 +725,31 @@ h2,
   border-radius: 14px;
   font-size: 0.95rem;
   line-height: 1.4;
+  white-space: pre-wrap;
   animation: rise 240ms ease both;
+}
+
+.voicebot__typing {
+  display: inline-flex;
+  gap: 0.28rem;
+  align-items: center;
+  min-height: 1.1rem;
+}
+
+.voicebot__typing span {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--sea);
+  animation: typing-dot 1s ease-in-out infinite;
+}
+
+.voicebot__typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.voicebot__typing span:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 .voicebot__bubble--bot {
@@ -756,18 +816,27 @@ h2,
   padding: 0.7rem 1rem;
 }
 
-.voicebot__cta {
-  margin: 0;
-  padding: 0 1rem 1rem;
-  font-size: 0.88rem;
-  color: var(--muted);
+@keyframes typing-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
 }
 
-.voicebot__cta a {
-  color: var(--sea-deep);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+@keyframes launcher-pulse {
+  0%,
+  100% {
+    box-shadow: 0 14px 32px rgba(14, 77, 84, 0.35);
+  }
+  50% {
+    box-shadow: 0 14px 32px rgba(14, 77, 84, 0.35), 0 0 0 8px rgba(23, 107, 115, 0.12);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,12 +2,15 @@
 
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import {
   BOT_GREETING,
-  BOT_SUGGESTIONS,
-  getBotReply,
+  BOT_SUGGESTIONS_ADMIN,
+  BOT_SUGGESTIONS_IDLE,
+  emptyDraft,
+  handleBotTurn,
   type BotMessage,
+  type ChatStep,
+  type DraftFeedback,
 } from "@/lib/bot";
 
 function makeId() {
@@ -17,14 +20,19 @@ function makeId() {
 export function FeedbackBot() {
   const pathname = usePathname();
   const panelId = useId();
+  const onAdmin = pathname.startsWith("/admin");
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [step, setStep] = useState<ChatStep>("idle");
+  const [draft, setDraft] = useState<DraftFeedback>(emptyDraft);
+  const [suggestions, setSuggestions] = useState(
+    onAdmin ? BOT_SUGGESTIONS_ADMIN : BOT_SUGGESTIONS_IDLE,
+  );
   const [messages, setMessages] = useState<BotMessage[]>([
     { id: "greeting", role: "bot", text: BOT_GREETING },
   ]);
   const listRef = useRef<HTMLDivElement>(null);
-
-  const hideOnAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
     if (!open) return;
@@ -32,23 +40,54 @@ export function FeedbackBot() {
       top: listRef.current.scrollHeight,
       behavior: "smooth",
     });
-  }, [messages, open]);
+  }, [messages, open, typing]);
 
-  if (hideOnAdmin) return null;
+  async function submitDraft(nextDraft: DraftFeedback) {
+    const res = await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nextDraft),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      return data.error || "Could not save feedback. Try again.";
+    }
+    return "Thanks — your feedback is in the review queue. Staff will see it on the Admin desk.";
+  }
 
   function send(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed || typing) return;
 
     const userMsg: BotMessage = { id: makeId(), role: "user", text: trimmed };
-    const botMsg: BotMessage = {
-      id: makeId(),
-      role: "bot",
-      text: getBotReply(trimmed),
-    };
-
-    setMessages((prev) => [...prev, userMsg, botMsg]);
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
+    setTyping(true);
+
+    const turn = handleBotTurn(trimmed, step, draft);
+
+    window.setTimeout(async () => {
+      let reply = turn.reply;
+      let nextStep = turn.step;
+      let nextDraft = turn.draft;
+      let nextSuggestions = turn.suggestions;
+
+      if (turn.shouldSubmit) {
+        reply = await submitDraft(turn.draft);
+        nextStep = "idle";
+        nextDraft = emptyDraft();
+        nextSuggestions = BOT_SUGGESTIONS_IDLE;
+      }
+
+      setStep(nextStep);
+      setDraft(nextDraft);
+      setSuggestions(nextSuggestions);
+      setMessages((prev) => [
+        ...prev,
+        { id: makeId(), role: "bot", text: reply },
+      ]);
+      setTyping(false);
+    }, 450);
   }
 
   function onSubmit(event: FormEvent) {
@@ -62,12 +101,20 @@ export function FeedbackBot() {
         <section
           className="voicebot__panel"
           id={panelId}
-          aria-label="VoiceBot help chat"
+          aria-label="CampusBot chatbot"
         >
           <header className="voicebot__header">
-            <div>
-              <p className="voicebot__eyebrow">Help</p>
-              <h2>VoiceBot</h2>
+            <div className="voicebot__identity">
+              <span className="voicebot__avatar" aria-hidden="true">
+                CB
+              </span>
+              <div>
+                <p className="voicebot__eyebrow">CampusVoice chatbot</p>
+                <h2>CampusBot</h2>
+                <p className="voicebot__status">
+                  <span className="voicebot__dot" /> Online
+                </p>
+              </div>
             </div>
             <button
               type="button"
@@ -88,43 +135,53 @@ export function FeedbackBot() {
                 {message.text}
               </div>
             ))}
+            {typing && (
+              <div
+                className="voicebot__bubble voicebot__bubble--bot voicebot__typing"
+                aria-live="polite"
+              >
+                <span />
+                <span />
+                <span />
+              </div>
+            )}
           </div>
 
-          <div className="voicebot__suggestions">
-            {BOT_SUGGESTIONS.map((suggestion) => (
-              <button
-                key={suggestion}
-                type="button"
-                className="voicebot__chip"
-                onClick={() => send(suggestion)}
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
+          {suggestions.length > 0 && (
+            <div className="voicebot__suggestions">
+              {suggestions.map((suggestion) => (
+                <button
+                  key={suggestion}
+                  type="button"
+                  className="voicebot__chip"
+                  onClick={() => send(suggestion)}
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
 
           <form className="voicebot__form" onSubmit={onSubmit}>
             <label className="sr-only" htmlFor="voicebot-input">
-              Message VoiceBot
+              Message CampusBot
             </label>
             <input
               id="voicebot-input"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about feedback…"
+              placeholder="Ask or submit feedback…"
               autoComplete="off"
+              disabled={typing}
             />
-            <button type="submit" className="btn btn--primary voicebot__send">
+            <button
+              type="submit"
+              className="btn btn--primary voicebot__send"
+              disabled={typing}
+            >
               Send
             </button>
           </form>
-
-          <p className="voicebot__cta">
-            Ready to write?{" "}
-            <Link href="/submit" onClick={() => setOpen(false)}>
-              Share feedback
-            </Link>
-          </p>
         </section>
       )}
 
@@ -135,7 +192,7 @@ export function FeedbackBot() {
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? "Close" : "Ask VoiceBot"}
+        {open ? "Close chat" : "Chat with CampusBot"}
       </button>
     </div>
   );
