@@ -17,7 +17,7 @@
       "instructor": "Dr. Mehta",
       "category": "teaching",
       "rating": 5,
-      "comment": "Clear explanations and helpful office hours. The weekly problem sets really cemented the concepts.",
+      "comment": "Clear explanations and helpful office hours. Weekly problem sets were very useful.",
       "status": "new",
       "createdAt": "2026-08-12T05:26:32.450Z",
       "updatedAt": "2026-08-12T05:26:32.450Z"
@@ -31,10 +31,10 @@
       "instructor": "Prof. Alvarez",
       "category": "workload",
       "rating": 3,
-      "comment": "Interesting readings, but three essays in one month made it hard to keep quality high across all of them.",
+      "comment": "Interesting readings, but the number of assignments was difficult to manage.",
       "status": "reviewed",
       "createdAt": "2026-08-10T05:26:32.453Z",
-      "updatedAt": "2026-08-12T05:26:32.450Z"
+      "updatedAt": "2026-08-14T09:00:00.000Z"
     },
     {
       "id": "69656792-e0aa-43b0-b788-2bc0244a9a7f",
