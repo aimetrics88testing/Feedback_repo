@@ -45,7 +45,7 @@ export function AdminLoginForm() {
           name="email"
           type="email"
           autoComplete="username"
-          placeholder="admin@campusvoice.edu"
+          placeholder="superadmin@unifeedback.edu"
           required
         />
       </label>
@@ -63,7 +63,7 @@ export function AdminLoginForm() {
         {pending ? "Signing in…" : "Sign in"}
       </button>
       <p className="hint">
-        Demo: <code>admin@campusvoice.edu</code> / <code>admin123</code>
+        Demo: <code>superadmin@unifeedback.edu</code> / <code>admin123</code>
       </p>
     </form>
   );
