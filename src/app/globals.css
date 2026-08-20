@@ -164,6 +164,12 @@ main {
   animation: bloom 4.8s ease-in-out infinite;
 }
 
+.hero__visual img {
+  content: url("/images/hero-visual.png");
+  position: absolute;
+  inset: 0;
+}
+
 .eyebrow {
   margin: 0 0 0.8rem;
   text-transform: uppercase;
