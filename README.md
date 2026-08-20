@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Admin demo login
 
-- Email: `admin@campusvoice.edu`
+- Email: `superadmin@unifeedback.edu`
 - Password: `admin123`
 
 ## Features
