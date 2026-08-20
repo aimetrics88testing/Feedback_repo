@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Figtree, Fraunces } from "next/font/google";
+import { Manrope, Syne } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FeedbackBot } from "@/components/FeedbackBot";
 import "./globals.css";
 
-const figtree = Figtree({
-  variable: "--font-figtree",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
 });
 
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${figtree.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${manrope.variable} ${syne.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SiteHeader />
